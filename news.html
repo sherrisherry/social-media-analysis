@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+#maincontainer{
+width:980px;
+margin:auto;
+padding-left:10px;
+padding-right:10px;
+padding-bottom:6px;
+padding-top:20px;
+background-color:white;
+}
+h1{
+text-align:center;
+line-height:1.5;
+font-size:35px;
+}
+h2{
+text-align:left;
+line-height:1.5;
+font-size:27px;
+}
+h3{
+text-align:left;
+line-height:1;
+font-size:20px;
+}
+p{
+text-indent:50px;
+font-size:18px;
+color:black;
+}
+li{
+font-size:18px;
+}
+.emp{
+font-weight:bold;
+}
+.notice{
+text-decoration:underline;
+font-style:italic;
+}
+center{
+line-height:1.5;
+}
+table {
+border-collapse: collapse;
+                border: 2px black solid;
+                font: 12px sans-serif;
+            }
+
+            td {
+                border: 1px black solid;
+                padding: 5px;
+            }
+.axis .domain {
+  display: none;
+}
+
+.arc text {
+  font-size: 13px;
+  text-anchor: middle;
+  fill: #fff;
+}
+
+.svgin{
+width: 67%;
+float: left;
+}
+.txtin{
+width: 33%;
+float: left;
+}
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 150px;					
+	padding-bottom:5px;
+	padding-top:5px;			
+    font: 12px sans-serif;
+    background: gold;	
+    border: 0px;		
+    border-radius: 8px;
+	z-index: 5;
+}
+
+div .sect{
+width: 1000px;
+margin-left:auto;
+margin-right:auto;
+margin-bottom:50px;
+margin-top:35px;
+}
+.svgbox{
+width: 960px;
+height: 500px;
+margin-left:auto;
+margin-right:auto;
+}
+.svgcanvas{
+background-color:white;
+font-family:sans-serif;
+}
+.legendtxt{
+font-size:13px;
+}
+.objtitle{
+font-size:15px;
+font-variant:small-caps;
+}
+.axis text{
+font-size:13px;
+}
+.axislabel{
+fill: #000;
+font-weight: bold;
+font-size:5px;
+}
+
+</style>
+</head>
+<body>
+<div id="maincontainer">
+<h1>News on Social Media</h1>
+<center>Student Name: Xiaoli (Sherry) Zhao</center>
+<div class='sect'><h2>About This Analysis</h2>
+<p>This analysis aims to reveal the pattern of behavior of news agencies and readers on social media.</p>
+<h3>The Questions:</h3>
+<ul>
+<li><a href="#svg1">What content attracts coverage?</a></li>
+<li><a href="#svg1">What content attracts readers?</a></li>
+<li><a href="#svg2">Does the interest of readers differ across platforms?</a></li>
+<li><a href="#svg3">Who reported most news?</a></li>
+<li><a href="#svg3">Is there dominance in reporting?</a></li>
+</ul>
+<h3>The Dataset:</h3>
+<p>This is a large data set of news items and their respective social feedback on multiple platforms: <span class='emp'>Facebook, Google+ and LinkedIn</span>.</p>
+<p>The collected data relates to a period of 8 months, <span class='notice'>between November 2015 and July 2016</span>, accounting for about 100,000 news items on four different topics: <span class='emp'>economy, Microsoft, Obama and Palestine</span>.</p>
+<p>The dataset has 13 tables. This analysis utilized the 'News_Final.csv' table, which contains 93,239 <span class='notice'>news that appeared on all 3 social media</span>. Every news has a popularity score from the 3 platforms respectively.</p>
+<center>Data Sample (if the table doesn't appear, please refresh this page)</center>
+<div id="sampledata"></div>
+<ul>Data Source:<li><a href="https://arxiv.org/abs/1801.07055" target="_blank">arXiv</a></li>
+<li><a href="http://archive.ics.uci.edu/ml/datasets/News+Popularity+in+Multiple+Social+Media+Platforms" target="_blank">UC Irvine Machine Learning Repository</a></li></ul>
+<h3>The Methodology:</h3>
+<p>The degree of coverage of each topic is represented by the number of reports about it.</p>
+<p>This analysis assumes that the popularity scores reasonably indicated the popularity of news on each social media. A news report whose popularity score is within the top 10% on a platform is defined to have been popular on that platform.</p> <p>The percentage of popular news about a topic in all the news about that topic is calculated for each platform respectively for comparison across platforms. Although the popularity score was calculated differently for each platform, those percentages are comparable across platforms because every news in our dataset appeared on all 3 social media. Moreover, those percentages eliminate the influence of the total number of news on each topic.</p><p>You can find detailed explanation about the calculation of popularity scores in <a href="https://arxiv.org/pdf/1801.07055" target="_blank">this paper</a>.</p>
+<p>The dataset also has information about the sources of news. The number of news articles from a source represents the productivity of that source.</p>
+<h3>Data Process:</h3>
+<p>This analysis required preprocessing the original dataset. Because the platforms set limits on querying their data, some records are without popularity scores. Those records have -1 as their popularity scores. After deleting them, the dataset had 81,637 records for analysis.</p>
+<p>The original dataset was transformed into 3 result tables for visualization.</p>
+<p>The preprocessing was by R: <a href="clean.R" target="_blank">Rscript</a>.</p>
+</div>
+<hr>
+<p>※ Hovering on the charts reveals details about an object. (This function works in IE edge)</p>
+<div class='sect' id="svg1"><h2>Coverage and Popularity of Each Topic</h2><div id='chart1' class='svgbox'></div>
+<p>The president of the USA attracted tremendous attention. Obama surpassed Microsoft and Palestine, closely following economy as the 2nd most reported topic.</p>
+<p>Furthermore, 30% of the news about Obama was popular on at least one of the 3 social media. Therefore, his news was more appealing than the other 3 topics.</p>
+</div>
+<div class='sect' id="svg2"><h2>Reader Preference on Social Media</h2><div id='chart2' class='svgbox'></div>
+<p>We can see that reader preference did differ on the 3 platforms.</p>
+<p>Obama was the most popular topic on both Facebook and Google+. Especially on Facebook, he attracted almost all the attention. However, he wasn't the hottest person on LinkedIn.</p>
+<p>Facebook users didn't seem to be fond of Microsoft. Nevertheless, Microsoft was hot on Google+ and LinkedIn.</p><p>LinkedIn users seem to have very different preference from Facebook and Google+. They were more interested in economy and Microsoft. The reason is likely to be that LinkedIn is geared towards career development while Facebook and Google+ are for general social.</p>
+</div>
+<div class='sect' id="svg3"><h2>Influence of News Agencies</h2><div class='svgbox'><div id='chart3' class='svgin'></div>
+<div id='chart3' class='txtin'>
+<h3>Total Number of Sources: 5,474</h3>
+<h3>Top 10 Media</h3>
+<ol>
+<li>Bloomberg</li>
+<li>Reuters</li>
+<li>ABC News</li>
+<li>New York Times</li>
+<li>The Guardian</li>
+<li>Business Insider</li>
+<li>Washington Post</li>
+<li>Forbes</li>
+<li>Economic Times</li>
+<li>Wall Street Journal</li>
+</ol></div></div>
+<p>We can see that social media did a good job in promoting diverse opinions. They obtained news from vast sources and there wasn't any dominant source. The top 10 sources in total accounted 11% of the news.</p>
+<p>However, the top 10 media had much higher exposure than others. As we can see from the inner circle, the top 10 news agencies were less than 0.2% of the sources. Compared with the 11% in total reports, we can conclude that the top 10 has much louder voice than others.</p>
+</div>
+<hr>
+<div><h2>Acknowledgment</h2>
+<ul><li>Thanks to <a href='https://bl.ocks.org/mbostock' target='_blank'>Mike Bostock</a> and <a href='https://bl.ocks.org/ndarville' target='_blank'>Niclas Darville</a> for their amazing charts. I learned a great deal from them.</li>
+<li>Thanks to Nuno Moniz for sharing the dataset.</li></ul></div>
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript"charset="utf-8">
+            d3.text("sample.csv", function(data) {
+                var parsedCSV = d3.csv.parseRows(data);
+
+                var container = d3.select("#sampledata")
+                    .append("table")
+
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+
+                    .selectAll("td")
+                        .data(function(d) { return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
+            });
+        </script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+var margin = {top: 20, right: 20, bottom: 35, left: 40}, canvsiz = {height: 500, width: 960},legendsize=21,
+	colortheme = ["#98abc5", "#6b486b", "#a05d56", "#3CB371"];
+var tooltip = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
+
+var svg = d3.select("#chart1").append("svg").attr("width", canvsiz.width).attr("height", canvsiz.height).attr("class", "svgcanvas"),
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom,
+    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var x = d3.scaleBand()
+    .rangeRound([25, width])
+    .paddingInner(0.2)
+    .align(0.1);
+
+var y = d3.scaleLinear()
+    .rangeRound([height, 0]);
+
+var z = d3.scaleOrdinal()
+    .range(colortheme);
+
+var sk = 2;
+	
+d3.csv("topics.csv", function(d, i, columns) {
+  for (i = sk, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+  d.total = t;
+  return d;
+}, function(error, data) {
+  if (error) throw error;
+
+  var keys = data.columns.slice(sk);
+
+  data.sort(function(a, b) { return b.total - a.total; });
+  x.domain(data.map(function(d) { return d.topics; }));
+  y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
+  z.domain(keys);
+
+  g.append("g")
+    .selectAll("g")
+    .data(d3.stack().keys(keys)(data))
+    .enter().append("g")
+      .attr("fill", function(d) { return z(d.key); })
+    .selectAll("rect")
+    .data(function(d) { return d; })
+    .enter().append("rect")
+      .attr("x", function(d) { return x(d.data.topics); })
+      .attr("y", function(d) { return y(d[1]); })
+      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+      .attr("width", x.bandwidth())
+	.on("mouseover", function(d) {
+			tooltip.transition()		
+                .duration(200)		
+                .style("opacity", .9);		
+            tooltip.html("Popular News: "+d.data.top + "%<br/>Total News: "  + d.data.total);
+            })
+	.on("mousemove", function(){return tooltip.style("top", (event.pageY-28)+"px").style("left",(event.pageX+10)+"px");})
+    .on("mouseout", function(d) {		
+				tooltip.transition()		
+                .duration(350)		
+                .style("opacity", 0);});
+  g.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  g.append("g")
+      .attr("class", "axis")
+      .call(d3.axisLeft(y).ticks(null, "s"))
+    .append("text")
+      .attr("x", 2)
+      .attr("y", y(y.ticks().pop())-5)
+      .attr("dy", "0.32em")
+	  .attr("class","axislabel")
+      .attr("text-anchor", "start")
+      .text("Coverage");
+
+  var legend = g.append("g")
+      .attr("class", "legendtxt")
+      .attr("text-anchor", "end")
+    .selectAll("g")
+    .data(keys.slice().reverse())
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * (legendsize+2) + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - legendsize)
+      .attr("width", legendsize)
+      .attr("height", legendsize)
+      .attr("fill", z);
+
+  legend.append("text")
+      .attr("x", width - legendsize*1.2)
+      .attr("y", legendsize/2)
+      .attr("dy", "0.32em")
+      .text(function(d) { return d; });
+});
+
+</script>
+<script>
+
+var canv2 = d3.select("#chart2").append("svg").attr("width", canvsiz.width).attr("height", canvsiz.height).attr("class", "svgcanvas"),
+    bargroup = canv2.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("smtopics.csv", function(d, i, columns) {
+  for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
+  return d;
+}, function(error, data) {
+  if (error) throw error;
+
+var x0 = d3.scaleBand()
+    .rangeRound([0, width])
+    .paddingInner(0.1);
+
+var x1 = d3.scaleBand()
+    .padding(0.05);
+
+var y = d3.scaleLinear()
+    .rangeRound([height, 0]);
+
+var z = d3.scaleOrdinal()
+    .range(colortheme);
+
+  var keys = data.columns.slice(1);
+
+  x0.domain(data.map(function(d) { return d.socialmedia; }));
+  x1.domain(keys).rangeRound([0, x0.bandwidth()]);
+  y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
+
+  bargroup.append("g")
+    .selectAll("g")
+    .data(data)
+    .enter().append("g")
+      .attr("transform", function(d) { return "translate(" + x0(d.socialmedia) + ",0)"; })
+    .selectAll("rect")
+    .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
+    .enter().append("rect")
+      .attr("x", function(d) { return x1(d.key); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("width", x1.bandwidth())
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill", function(d) { return z(d.key); })
+	.on("mouseover", function(d) {
+			tooltip.transition()		
+                .duration(200)		
+                .style("opacity", .9);
+            tooltip.html("<strong>"+d.key + "</strong><br/>Percentage: "  + d.value+"%");
+            }).on("mousemove", function(){return tooltip.style("top", (event.pageY-28)+"px").style("left",(event.pageX+10)+"px");})
+    .on("mouseout", function(d) {		
+				tooltip.transition()		
+                .duration(350)		
+                .style("opacity", 0);});
+
+  bargroup.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x0));
+
+  bargroup.append("g")
+      .attr("class", "axis")
+      .call(d3.axisLeft(y).ticks(null, "s"))
+    .append("text")
+      .attr("x", 2)
+      .attr("y", y(y.ticks().pop()) + 0.5)
+      .attr("dy", "0.32em")
+	  .attr("class","axislabel")
+      .attr("text-anchor", "start")
+      .text("% of Popular News in Each Topic");
+
+  var legend = bargroup.append("g")
+      .attr("class", "legendtxt")
+      .attr("text-anchor", "end")
+    .selectAll("g")
+    .data(keys.slice().reverse())
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * (legendsize+2) + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - legendsize)
+      .attr("width", legendsize)
+      .attr("height", legendsize)
+      .attr("fill", z);
+
+  legend.append("text")
+      .attr("x", width - legendsize*1.2)
+      .attr("y", legendsize/2)
+      .attr("dy", "0.32em")
+      .text(function(d) { return d; });
+});
+
+</script>
+<script>
+
+var canv3 = d3.select("#chart3").append("svg").attr("width", canvsiz.width/1.5).attr("height", canvsiz.height).attr("class", "svgcanvas"),
+    radius = Math.min(+canv3.attr('width'), +canv3.attr('height')) / 2,
+    piedonut = canv3.append("g").attr("transform", "translate(" + (+canv3.attr('width')) / 2 + "," + canvsiz.height / 2 + ")"),
+	piedonut0 = canv3.append("g").attr("transform", "translate(" + (+canv3.attr('width')) / 2 + "," + canvsiz.height / 2 + ")");
+var color = d3.scaleOrdinal(colortheme);
+
+var pie = d3.pie()
+    .sort(null)
+    .value(function(d) { return d.count; }),
+	pie0 = d3.pie()
+    .sort(null)
+    .value(function(d) { return d.mcount; });
+
+var path = d3.arc()
+    .outerRadius(radius - 30)
+    .innerRadius(radius - 90),
+	path0 = d3.arc()
+    .outerRadius(radius - 110)
+    .innerRadius(radius - 170);
+
+var label = d3.arc()
+    .outerRadius(radius - 55)
+    .innerRadius(radius - 55);
+
+d3.csv("newsource.csv", function(d) {
+  d.count = +d.count;
+  d.percent = +d.percent;
+  return d;
+}, function(error, data) {
+  if (error) throw error;
+
+  var arc = piedonut.selectAll(".arc")
+    .data(pie(data))
+    .enter().append("g")
+      .attr("class", "arc"),
+	arc0 = piedonut0.selectAll(".arc")
+    .data(pie0(data))
+    .enter().append("g")
+      .attr("class", "arc");
+
+  arc.append("path")
+      .attr("d", path)
+      .attr("fill", function(d) { return color(d.data.types); })
+	  .on("mouseover", function(d) {
+			tooltip.transition()		
+                .duration(200)		
+                .style("opacity", .9);
+            tooltip.html("<strong>"+d.data.types + "</strong><br/>Percentage: "  + d.data.percent+"%<br/>In All Reports");
+            })
+	.on("mousemove", function(){return tooltip.style("top", (event.pageY-28)+"px").style("left",(event.pageX+10)+"px");})
+    .on("mouseout", function(d) {		
+				tooltip.transition()		
+                .duration(350)		
+                .style("opacity", 0);});
+
+  arc.append("text")
+      .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+      .attr("dy", "0.35em")
+      .text(function(d) { return d.data.types; });
+
+  arc0.append("path")
+      .attr("d", path0)
+      .attr("fill", function(d) { return color(d.data.types); })
+	  .on("mouseover", function(d) {
+			tooltip.transition()		
+                .duration(200)		
+                .style("opacity", .9);
+            tooltip.html("<strong>"+d.data.types + "</strong><br/>Percentage: "  + d.data.mpercent+"%<br/>In All Media");
+            })
+	.on("mousemove", function(){return tooltip.style("top", (event.pageY-28)+"px").style("left",(event.pageX+10)+"px");})
+    .on("mouseout", function(d) {		
+				tooltip.transition()		
+                .duration(350)		
+                .style("opacity", 0);});
+
+	canv3.append("text")
+	.attr("class","objtitle")
+	.attr("text-anchor", "end")
+      .attr("transform", "translate(" + (+canv3.attr('width'))/5.5 + "," + canvsiz.height /3.5 + ")")
+      .text('Reports');
+	canv3.append("text")
+	.attr("class","objtitle")
+	.attr("text-anchor", "start")
+      .attr("transform", "translate(" + (+canv3.attr('width'))/2.5 + "," + canvsiz.height /1.7 + ")")
+      .text('Media');
+});
+
+</script>
+</body>
+</html>
