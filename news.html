@@ -187,10 +187,10 @@ font-size:5px;
 <ul><li>Thanks to <a href='https://bl.ocks.org/mbostock' target='_blank'>Mike Bostock</a> and <a href='https://bl.ocks.org/ndarville' target='_blank'>Niclas Darville</a> for their amazing charts. I learned a great deal from them.</li>
 <li>Thanks to Nuno Moniz for sharing the dataset.</li></ul></div>
 </div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript"charset="utf-8">
-            d3.text("https://github.com/sherrisherry/social-media-analysis/blob/master/sample.csv", function(data) {
-                var parsedCSV = d3.csv.parseRows(data);
+            d3.text("sample.csv", function(data) {
+                var parsedCSV = d3.csvParseRows(data);
 
                 var container = d3.select("#sampledata")
                     .append("table")
@@ -204,8 +204,7 @@ font-size:5px;
                         .append("td")
                         .text(function(d) { return d; });
             });
-        </script>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+</script>
 <script>
 var margin = {top: 20, right: 20, bottom: 35, left: 40}, canvsiz = {height: 500, width: 960},legendsize=21,
 	colortheme = ["#98abc5", "#6b486b", "#a05d56", "#3CB371"];
@@ -231,7 +230,7 @@ var z = d3.scaleOrdinal()
 
 var sk = 2;
 	
-d3.csv("https://github.com/sherrisherry/social-media-analysis/blob/master/topics.csv", function(d, i, columns) {
+d3.csv("topics.csv", function(d, i, columns) {
   for (i = sk, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
   d.total = t;
   return d;
@@ -311,7 +310,7 @@ d3.csv("https://github.com/sherrisherry/social-media-analysis/blob/master/topics
 var canv2 = d3.select("#chart2").append("svg").attr("width", canvsiz.width).attr("height", canvsiz.height).attr("class", "svgcanvas"),
     bargroup = canv2.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("https://github.com/sherrisherry/social-media-analysis/blob/master/smtopics.csv", function(d, i, columns) {
+d3.csv("smtopics.csv", function(d, i, columns) {
   for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
   return d;
 }, function(error, data) {
@@ -424,7 +423,7 @@ var label = d3.arc()
     .outerRadius(radius - 55)
     .innerRadius(radius - 55);
 
-d3.csv("https://github.com/sherrisherry/social-media-analysis/blob/master/newsource.csv", function(d) {
+d3.csv("newsource.csv", function(d) {
   d.count = +d.count;
   d.percent = +d.percent;
   return d;
